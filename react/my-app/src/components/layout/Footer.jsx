@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import Contact from '../../pages/Contact';
-import PrivacyPolicy from '../pages/PrivacyPolicy';
+import PrivacyPolicy from '../../pages/PrivacyPolicy';
 import TermsOfService from '../../pages/TermsOfService';
 
 function Footer() {

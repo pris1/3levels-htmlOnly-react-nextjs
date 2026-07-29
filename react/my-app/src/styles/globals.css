@@ -23,3 +23,7 @@ body {
 .main-container {
   flex: 1;
 }
+
+p {
+  background-color: greenyellow;
+}
