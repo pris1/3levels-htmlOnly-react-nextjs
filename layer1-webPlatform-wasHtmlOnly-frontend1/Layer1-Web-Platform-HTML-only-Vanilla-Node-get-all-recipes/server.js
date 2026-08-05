@@ -15,6 +15,11 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
     if (req.url === '/') {
       res.setHeader('Content-Type', 'text/html');
+      res.end(`<a href="/recipes">Get recipes</a>`);
+      return;
+    }
+    if (req.url === '/recipes') {
+      res.setHeader('Content-Type', 'text/html');
       let listItems = '';
       for (let i = 0; i < recipes.length; i++) {
         listItems += `<li>${recipes[i].name}</li> `;
@@ -30,8 +35,10 @@ const server = http.createServer((req, res) => {
       res.end(html);
       return;
     }
+    res.end('Not found route');
+    return;
   }
-  res.end('Not found route');
+  res.end('Method not allowed');
 });
 
 server.listen(3000, () => {

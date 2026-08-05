@@ -6,9 +6,19 @@
     <title>Document</title>
   </head>
   <body>
-    <ul>
+    <!-- <ul>
       <li>Pizza</li>
       <li>Pasta</li>
-    </ul>
+    </ul> -->
+    <ul></ul>
+    <button>Get recipes</button>
+    <script>
+      const btn = document.querySelector('button');
+      const ul = document.querySelector('ul');
+      function handleChange() {
+        ul.innerHTML =` <li>Pasta</li>`
+      }
+      btn.addEventListener('click', handleChange);
+    </script>
   </body>
 </html>
