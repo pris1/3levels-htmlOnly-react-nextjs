@@ -1,51 +1,65 @@
 const http = require('http');
+const fs = require('fs');
 
 const recipes = [
-  {
-    id: 1,
-    name: 'Pizza',
-  },
-  {
-    id: 2,
-    name: 'Pasta',
-  },
+  { id: 1, name: 'Pizza' },
+  { id: 2, name: 'Pasta' },
 ];
-
 const server = http.createServer((req, res) => {
-  if (req.url === '/') {
-    res.setHeader('Content-Type', 'text/html');
-    res.end(
-      `
-      <a href="/recipes/1">Pizza</a>`,
-    );
-    return;
-  }
-
   if (req.method === 'GET') {
-    const splitUrl = req.url.split('/');
+    //route 1 home
+    if (req.url === '/') {
+      const html = fs.readFileSync('index.html');
+      res.writeHead(200, {
+        'Content-Type': 'text/html',
+      });
+      res.end(html);
+      return;
+    }
 
-    const resource = splitUrl[1];
-    const id = Number(splitUrl[2]);
+    //route 2 css
+    if (req.url === '/styles.css') {
+      const css = fs.readFileSync('styles.css');
+      res.writeHead(200, { 'Content-Type': 'text/css' });
+      res.end(css);
+      return;
+    }
 
-    if (resource === 'recipes') {
-      console.log(resource);
-      console.log(id);
+    //route 3
+    if (req.url === '/app.js') {
+      const js = fs.readFileSync('app.js');
+      res.writeHead(200, {
+        'Content-Type': 'application/javascript',
+      });
+      res.end(js);
+      return;
+    }
 
-      for (let obj of recipes) {
-        if (obj.id === id) {
-          console.log(obj);
+    //route 4 pathpar
+    if (req.url.startsWith('/recipes/')) {
+      const splitUrl = req.url.split('/');
+      console.log(splitUrl);
+      const resource = splitUrl[1];
+      const splitUrlId = Number(splitUrl[2]);
 
-          res.end(JSON.stringify(obj));
+      for (let recipe of recipes) {
+        if (recipe.id === splitUrlId) {
+          res.writeHead(200, {
+            'Content-Type': 'application/json',
+          });
+
+          res.end(JSON.stringify(recipe));
           return;
         }
       }
 
-      res.end('Recipe not found');
+      res.writeHead(404, {
+        'Content-Type': 'text/plain',
+      });
+      res.end('Route not found');
       return;
     }
   }
-
-  res.end('Route not found');
 });
 
 server.listen(3000, () => {
