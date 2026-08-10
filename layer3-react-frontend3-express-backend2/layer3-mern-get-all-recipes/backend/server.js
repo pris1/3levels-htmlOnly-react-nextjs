@@ -3,12 +3,35 @@
 // fetch('http://localhost:3000/recipes', { Method: "GET"}) now in step 2 of the backend i am creating endpoint and handler to receive and process this request and write and send a response to the frontend. i will start is as vanilla js inorder to develop the intuitive way of creating the backend see:
 //step 2 vanilla node way
 // const http = require('http');
+// const recipes = [
+//   {
+//     id: 1,
+//     name: 'Pizza',
+//   },
+//   {
+//     id: 2,
+//     name: 'Pasta',
+//   },
+// ];
 // const server = http.createServer((req, res) => {
+//   if (req.method === 'OPTIONS') {
+//     res.writeHead(204, {
+//       'Access-Control-Allow-Origin': 'http://localhost:5173',
+//       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+//       'Access-Control-Allow-Headers': 'Content-Type',
+//     });
+
+//     res.end();
+//     return;
+//   }
 //   if (req.method === 'GET') {
 //     if (req.url === '/recipes') {
+//       res.writeHead(200, {
+//         'Access-Control-Allow-Origin': 'http://localhost:5173',
+//         'Content-Type': 'application/json',
+//       });
 //       // handler here
-//       res.end('it worked');
-//       return;
+//       res.end(JSON.stringify(recipes));
 //     }
 
 //     if (req.url === '/recipes/1') {
@@ -36,16 +59,30 @@
 //     res.end('it worked');
 //     return;
 //   }
-// res.writeHead(405, {'Content-Type':'text/plain'})
+//   res.writeHead(405, { 'Content-Type': 'text/plain' });
 //   res.end('Method not allowed');
 //   return;
 // });
 
 // server.listen(3000, () => {});
 
+////mern starts here//////////////////////////////////////////////////////////--------------------------
+
 //step3 translating this into express
 const express = require('express');
+
+const cors = require('cors');
+
 const app = express();
+
+//middelwar
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  }),
+);
+
+app.use(express.json());
 
 const recipes = [
   {
@@ -59,7 +96,7 @@ const recipes = [
 ];
 
 app.get('/recipes', (req, res) => {
-  res.status(200).json({ message: 'Recipe found', recipes });
+  res.status(200).json(recipes);
 });
 
 app.listen(3000, () => {
