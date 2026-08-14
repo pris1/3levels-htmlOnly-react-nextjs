@@ -2,31 +2,28 @@ import { useState } from 'react'
 
 function Recipes() {
   //step4 the we are waiting for the data to come so we create a state for itbefore it arrives state is null or empty and will be updated by setData when teh data arrives from the backend
-  //calling an existing function
-  const [recipe, setRecipes] = useState(null)
+  //calling an existing functio
+  const [recipe, setRecipe] = useState(null)
+  const [name, setName] = useState('')
 
-  function HandleClick() {
-    fetch('http://localhost:3000/recipes?name=Burger')
-      .then(function (responseObj) {
-        //return a promise created by .json()
-        return responseObj.json()
+  function handleClick() {
+    // your next step goes here
+    const url = `http://localhost:3000/recipes?name=${name}`
+
+    fetch(url)
+      .then((resObj) => {
+        return resObj.json()
       })
-      .then(function (data) {
-        //set the
-        console.log(data)
-        setRecipes(data)
-      })
-      .catch(function (error) {
-        console.log(error)
+      .then(function (recipeData) {
+        setRecipe(recipeData)
       })
   }
 
   return (
     <>
-      <input type="text" placeholder="Enter recipe name" />
-      <button onClick={HandleClick}>Get recipes</button>
-      {/* h2 for semantics becoz its a heading */}
-      {recipe && <h2>{recipe.name}</h2>}
+      <input value={name} onChange={(event) => setName(event.target.value)} />
+      <button onClick={handleClick}>Search</button>
+      {recipe && <p>{recipe.name}</p>}
     </>
   )
 }
