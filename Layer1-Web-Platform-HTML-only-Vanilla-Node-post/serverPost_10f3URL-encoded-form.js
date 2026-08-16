@@ -62,6 +62,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  //this get /recipes is put here only to test if the post has succeeded if it does it will give an array including the just posted recipe
+  if (req.method === 'GET' && req.url === '/recipes') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(recipes));
+    return;
+  }
   res.writeHead(405, { 'Content-Type': 'text/plain' });
   res.end('Method not allowed');
   return;
