@@ -43,7 +43,6 @@ const server = http.createServer((req, res) => {
     // Route 4 - API
     if (req.url === '/recipes') {
       res.setHeader('Content-Type', 'application/json');
-
       res.end(JSON.stringify(recipes));
 
       return;

@@ -1,0 +1,17 @@
+{
+  "name": "layer2-web-platform-html-and-js-and-vanilla-node-get-all-rec",
+  "version": "1.0.0",
+  "main": "oldserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "pg": "^8.23.1"
+  }
+}
